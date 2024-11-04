@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ideas</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-between py-3">
+            {% if session.get('user_id') %}
+                <div>
+                    Bienvenido, {{ session['nombre'] }}!
+                    <a href="/logout" class="btn btn-danger">Cerrar Sesión</a>
+                </div>
+            {% else %}
+                <a href="/loginRegister" class="btn btn-primary">Iniciar Sesión / Registrarse</a>
+            {% endif %}
+        </div>
+
+        <div class="text-end mb-3">
+            <a href="{% if session.get('user_id') %}/addNote{% else %}/loginRegister{% endif %}" class="btn btn-success">Agregar Nota</a>
+        </div>
+
+        {% if notas %}
+            {% for nota in notas %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            {{ nota['nombre'] }} {{ nota['apellido'] }}
+                            <small class="text-muted float-end">{{ nota['created_at'] }}</small>
+                        </h6>
+                        <p class="card-text">{{ nota['content'] }}</p>
+                        {% if session.get('user_id') == nota['user_id'] %}
+                            <a href="/editNote/{{ nota['id'] }}" class="btn btn-warning btn-sm">Editar</a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Aún no hay ideas publicadas</p>
+        {% endif %}
+    </div>
+</body>
+</html>
