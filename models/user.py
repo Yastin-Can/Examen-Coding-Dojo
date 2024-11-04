@@ -1,4 +1,3 @@
-# models/user.py
 from config.db import connectToMySQL
 
 class User:

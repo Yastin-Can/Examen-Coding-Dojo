@@ -1,4 +1,3 @@
-# models/note.py
 from config.db import connectToMySQL
 from datetime import datetime
 
