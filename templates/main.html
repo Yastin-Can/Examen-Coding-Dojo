@@ -20,7 +20,7 @@
         </div>
 
         <div class="text-end mb-3">
-            <a href="{% if session.get('user_id') %}/addNote{% else %}/loginRegister{% endif %}" class="btn btn-success">Agregar Nota</a>
+            <a href="{% if session.get('user_id') %}/addNote{% else %}/loginRegister{% endif %}" class="btn btn-success">Publicar Nota</a>
         </div>
 
         {% if notas %}
@@ -29,11 +29,18 @@
                     <div class="card-body">
                         <h6 class="card-title">
                             {{ nota['nombre'] }} {{ nota['apellido'] }}
-                            <small class="text-muted float-end">{{ nota['created_at'] }}</small>
+                            <small class="text-muted float-end">
+                                {% if nota['fecha_actualizacion'] %}
+                                    Última actualización: {{ nota['fecha_actualizacion'] }}
+                                {% else %}
+                                    Publicado el: {{ nota['fecha_publicacion'] }}
+                                {% endif %}
+                            </small>
                         </h6>
-                        <p class="card-text">{{ nota['content'] }}</p>
+                        <p class="card-text">{{ nota['contenido'] }}</p>
                         {% if session.get('user_id') == nota['user_id'] %}
                             <a href="/editNote/{{ nota['id'] }}" class="btn btn-warning btn-sm">Editar</a>
+                            <a href="/deleteNote/{{ nota['id'] }}" class="btn btn-danger btn-sm">Eliminar</a>
                         {% endif %}
                     </div>
                 </div>
