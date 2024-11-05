@@ -45,7 +45,7 @@ def editNote(note_id):
 
 @app.route('/deleteNote/<int:note_id>', methods=['GET', 'POST'])
 def deleteNote(note_id):
-    if session not in session:
+    if 'id' not in session:
         return redirect(url_for('login_register'))
     
     note = Note.get_by_id(note_id)
