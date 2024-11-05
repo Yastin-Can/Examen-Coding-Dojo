@@ -99,6 +99,9 @@ def register():
     
     password = bcrypt.generate_password_hash(password).decode("utf-8")
     user = User.insert_one(nombre, apellido, email, password)
+    users = User.get_by_email(email)
+    
+    session['id'] = users.id
 
     return redirect(url_for('main', user = user))
 
