@@ -9,13 +9,18 @@
 <body>
     <div class="container">
         <h1 class="my-4">Editar Nota</h1>
-        <form action="{{ url_for('edit_note', note_id=nota['id']) }}" method="POST">
+        
+        <form action="/editNote/{{ nota['id'] }}" method="POST">
             <div class="mb-3">
                 <label for="contenido" class="form-label">Contenido:</label>
                 <textarea class="form-control" id="contenido" name="contenido" rows="4" required>{{ nota['contenido'] }}</textarea>
             </div>
             <button type="submit" class="btn btn-primary">Guardar Cambios</button>
             <a href="{{ url_for('main') }}" class="btn btn-secondary">Cancelar</a>
+        </form>
+        
+        <form action="/deleteNote/{{ nota['id'] }}" method="POST" style="display: inline;">
+            <button type="submit" class="btn btn-danger mt-3">Eliminar Nota</button>
         </form>
     </div>
 </body>

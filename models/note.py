@@ -48,30 +48,25 @@ class Note:
     @classmethod
     def update_one(cls, note_id, contenido):
         query = """
-        UPDATE notes 
-        SET contenido = %(contenido)s, fecha_actualizacion = NOW() 
-        WHERE id = %(id)s;
+            UPDATE notes 
+            SET contenido = %(contenido)s, fecha_actualizacion = NOW()
+            WHERE id = %(note_id)s;
         """
         data = {
-            "contenido": contenido,
-            "id": note_id
+            'note_id': note_id,
+            'contenido': contenido
         }
         return connectToMySQL('lluvia').query_db(query, data)
 
     @classmethod
     def delete_one(cls, note_id):
-        query = "DELETE FROM notes WHERE id = %(id)s;"
-        data = {'id': note_id}
+        query = "DELETE FROM notes WHERE id = %(note_id)s;"
+        data = {'note_id': note_id}
         return connectToMySQL('lluvia').query_db(query, data)
 
     @classmethod
     def get_by_id(cls, note_id):
-        query = """
-        SELECT notes.*, users.nombre, users.apellido 
-        FROM notes 
-        JOIN users ON notes.user_id = users.id 
-        WHERE notes.id = %(id)s;
-        """
-        data = {'id': note_id}
+        query = "SELECT * FROM notes WHERE id = %(note_id)s;"
+        data = {'note_id': note_id}
         result = connectToMySQL('lluvia').query_db(query, data)
         return result[0] if result else None

@@ -29,31 +29,33 @@ def add_note():
     return render_template('addNote.html')
 
 @app.route('/editNote/<int:note_id>', methods=['GET', 'POST'])
-def edit_note(note_id):
+def editNote(note_id):
     if 'id' not in session:
         return redirect(url_for('login_register'))
-    
-    note = Note.get_by_id(note_id)
-    if note['id'] != session['id']:
-        return redirect(url_for('main'))
-    
-    if request.method == 'POST':
-        contenido = request.form['contenido']
-        Note.update_one(note_id, contenido)
-        return redirect(url_for('main'))
-    
-    return render_template('editNote.html', nota=note)
 
-@app.route('/deleteNote/<int:note_id>')
-def delete_note(note_id):
+    nota = Note.get_by_id(note_id)
+
+    if not nota or nota['user_id'] != session['id']:
+        return redirect(url_for('main'))
+
+    if request.method == 'POST':
+        nuevo_contenido = request.form['contenido']
+        Note.update_one(note_id, nuevo_contenido)
+        return redirect(url_for('main'))
+
+    return render_template('editNote.html', nota=nota)
+@app.route('/deleteNote/<int:note_id>', methods=['GET', 'POST'])
+def deleteNote(note_id):
     if 'id' not in session:
         return redirect(url_for('login_register'))
     
     note = Note.get_by_id(note_id)
-    if note['id'] == session['id']:
+    if note and note['user_id'] == session['id']:
         Note.delete_one(note_id)
     
     return redirect(url_for('main'))
+
+
 
 @app.route('/loginRegister')
 def login_register():
