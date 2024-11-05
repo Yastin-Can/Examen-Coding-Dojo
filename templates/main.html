@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ideas</title>
+    <title>Lluvia de Ideas</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
@@ -24,25 +24,24 @@
         {% endif %}
       </div>
 
-      {% if session %}
       <div class="text-end mb-3">
-        <a href="/addNote " class="btn btn-success">Publicar Nota</a>
+        <a href="/addNote " class="btn btn-success">Publicar Idea</a>
       </div>
 
-      {% else %}
-
-      <div class="text-end mb-3">
-        <a href="/loginRegister" class="btn btn-success">Publicar Nota</a>
-      </div>
-      {% endif %} {% if notas %} {% for nota in notas %}
+      {% if notas %} 
+      {% for nota in notas %}
       <div class="card mb-3">
         <div class="card-body">
           <h6 class="card-title">
             {{ nota['nombre'] }} {{ nota['apellido'] }}
             <small class="text-muted float-end">
-              {% if nota['fecha_actualizacion'] %} Última actualización: {{
-              nota['fecha_actualizacion'] }} {% else %} Publicado el: {{
-              nota['fecha_publicacion'] }} {% endif %}
+              {% if nota['fecha_actualizacion'] %} 
+              Última actualización:
+              {{ nota['fecha_actualizacion'] }} 
+              {% else %} 
+              Publicado el: 
+              {{ nota['fecha_publicacion'] }} 
+              {% endif %}
             </small>
           </h6>
           <p class="card-text">{{ nota['contenido'] }}</p>

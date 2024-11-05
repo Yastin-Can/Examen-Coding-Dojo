@@ -10,10 +10,7 @@ bcrypt = Bcrypt(app)
 
 @app.route('/')
 def main():
-    if 'id' in session:
-        notes = Note.get_by_user_id(session['id'])
-    else:
-        notes = Note.get_all()
+    notes = Note.get_all()
     return render_template('main.html', notas=notes)
 
 @app.route('/addNote', methods=['GET', 'POST'])
@@ -48,7 +45,7 @@ def editNote(note_id):
 
 @app.route('/deleteNote/<int:note_id>', methods=['GET', 'POST'])
 def deleteNote(note_id):
-    if 'id' not in session:
+    if session not in session:
         return redirect(url_for('login_register'))
     
     note = Note.get_by_id(note_id)
