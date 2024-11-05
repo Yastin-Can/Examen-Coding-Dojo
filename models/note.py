@@ -58,6 +58,7 @@ class Note:
         }
         return connectToMySQL('lluvia').query_db(query, data)
 
+
     @classmethod
     def delete_one(cls, note_id):
         query = "DELETE FROM notes WHERE id = %(note_id)s;"

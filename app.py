@@ -44,6 +44,8 @@ def editNote(note_id):
         return redirect(url_for('main'))
 
     return render_template('editNote.html', nota=nota)
+
+
 @app.route('/deleteNote/<int:note_id>', methods=['GET', 'POST'])
 def deleteNote(note_id):
     if 'id' not in session:
